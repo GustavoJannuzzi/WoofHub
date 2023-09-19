@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\netin\\WoofHub_App\\WoofHub_App.csproj": {}
+    "C:\\Users\\netin\\WoofHub_App\\WoofHub_App.csproj": {}
   },
   "projects": {
-    "c:\\Users\\netin\\WoofHub_App\\WoofHub_App.csproj": {
+    "C:\\Users\\netin\\WoofHub_App\\WoofHub_App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\netin\\WoofHub_App\\WoofHub_App.csproj",
+        "projectUniqueName": "C:\\Users\\netin\\WoofHub_App\\WoofHub_App.csproj",
         "projectName": "WoofHub_App",
-        "projectPath": "c:\\Users\\netin\\WoofHub_App\\WoofHub_App.csproj",
+        "projectPath": "C:\\Users\\netin\\WoofHub_App\\WoofHub_App.csproj",
         "packagesPath": "C:\\Users\\netin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\netin\\WoofHub_App\\obj\\",
+        "outputPath": "C:\\Users\\netin\\WoofHub_App\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\netin\\AppData\\Roaming\\NuGet\\NuGet.Config"
