@@ -34,3 +34,13 @@ C:\Users\netin\WoofHub_App\obj\Debug\net7.0\refint\WoofHub_App.dll
 C:\Users\netin\WoofHub_App\obj\Debug\net7.0\WoofHub_App.pdb
 C:\Users\netin\WoofHub_App\obj\Debug\net7.0\WoofHub_App.genruntimeconfig.cache
 C:\Users\netin\WoofHub_App\obj\Debug\net7.0\ref\WoofHub_App.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Humanizer.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\dotnet-ef.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\MySqlConnector.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\System.CodeDom.dll

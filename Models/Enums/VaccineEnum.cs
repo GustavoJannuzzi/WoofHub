@@ -10,7 +10,7 @@ namespace WoofHub_App.Models
         [Description("Precisa vacinar")]
         NeedVaccine = 2,
 
-        [Description("Sem Vacina")]
+        [Description("Não Vacinado")]
         NoVaccine = 3
     }
 }

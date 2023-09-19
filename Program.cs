@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using WoofHub_App.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("WoofHubConnection");
+
+builder.Services.AddDbContext<WoofHubContext>(options =>
+options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 
