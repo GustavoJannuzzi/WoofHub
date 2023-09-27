@@ -1,23 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using WoofHub_App.Models;
 using WoofHub_App.Models.Enums;
 
-namespace WoofHub_App.Models
+namespace WoofHub_App.Data.DTOs
 {
-    public class AnimalModel
+    public class AnimalDTO
     {
-        [Key]
         [Required]
-        public int Id { get; set; }
-
-        [Required]
-        [MaxLength(100)]
+        [StringLength(100)]
         public string? AnimalName { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [StringLength(100)]
         public string? Age { get; set; }
         
-        [MaxLength(5000, ErrorMessage = "A descrição deve ter no máximo 5000 caractereres")]
+        [StringLength(5000, ErrorMessage = "A descrição deve ter no máximo 5000 caractereres")]
         public string? Description { get; set; }
 
         [Required]

@@ -1,4 +1,7 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using WoofHub_App.Data;
+using WoofHub_App.Data.DTOs;
 using WoofHub_App.Models;
 
 namespace WoofHub_App.Controllers
@@ -7,15 +10,21 @@ namespace WoofHub_App.Controllers
     [Route("[controller]")]
     public class AnimalController : ControllerBase
     {
-        private static List<AnimalModel> animals = new List<AnimalModel>();
-        private static int id = 0;
+        private WoofHubContext _context;
+        private IMapper _mapper;
+
+        public AnimalController(WoofHubContext context)
+        {
+            _context = context;
+        }
 
         [HttpPost]
-        public IActionResult AddAnimal([FromBody] AnimalModel animal)
+        public IActionResult AddAnimal(
+            [FromBody] AnimalDTO animalDto)
         {
-            animal.Id = id++;
-            animals.Add(animal);
-
+            AnimalModel animal = _mapper.Map<AnimalModel>(animalDto);
+            _context.Animals.Add(animal);
+            _context.SaveChanges();
             return CreatedAtAction(nameof(SearchAnimalId),
                 new { id = animal.Id },
                 animal);
@@ -24,13 +33,13 @@ namespace WoofHub_App.Controllers
         [HttpGet]
         public IEnumerable<AnimalModel> ShowAllAnimals()
         {
-            return animals;
+            return _context.Animals;
         }
 
         [HttpGet("{id}")]
         public IActionResult SearchAnimalId(int id)
         {
-            var animal = animals.FirstOrDefault(animal => animal.Id == id);
+            var animal = _context.Animals.FirstOrDefault(animal => animal.Id == id);
             if (animal == null)
                 return NotFound();
 
@@ -40,7 +49,7 @@ namespace WoofHub_App.Controllers
         [HttpGet("Search")]
         public IActionResult SearchAnimalName([FromQuery] string AnimalName)
         {
-            var matchingAnimals = animals.Where(animal => animal.AnimalName == AnimalName).ToList();
+            var matchingAnimals = _context.Animals.Where(animal => animal.AnimalName == AnimalName).ToList();
             if (!matchingAnimals.Any())
                 return NotFound();
 
