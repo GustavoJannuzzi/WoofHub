@@ -11,8 +11,8 @@ using WoofHub_App.Data;
 namespace WoofHub_App.Migrations
 {
     [DbContext(typeof(WoofHubContext))]
-    [Migration("20230919230733_01 - Criação da database")]
-    partial class _01Criaçãodadatabase
+    [Migration("20230928031613_CriacaoDoBanco")]
+    partial class CriacaoDoBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,33 @@ namespace WoofHub_App.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("WoofHub_App.Models.AdoptionModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Situation")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Adoption");
+                });
 
             modelBuilder.Entity("WoofHub_App.Models.AdressModel", b =>
                 {
@@ -48,7 +75,7 @@ namespace WoofHub_App.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AdressModel");
+                    b.ToTable("Adresse");
                 });
 
             modelBuilder.Entity("WoofHub_App.Models.AnimalModel", b =>
@@ -57,14 +84,19 @@ namespace WoofHub_App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("Age")
-                        .HasColumnType("int");
+                    b.Property<string>("Age")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<int>("Animal")
-                        .HasColumnType("int");
+                    b.Property<string>("Animal")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("AnimalName")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int?>("ClientModelId")
                         .HasColumnType("int");
@@ -73,23 +105,27 @@ namespace WoofHub_App.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("varchar(5000)");
 
-                    b.Property<int>("Situation")
-                        .HasColumnType("int");
+                    b.Property<string>("Situation")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("Treatment")
-                        .HasColumnType("int");
+                    b.Property<string>("Treatment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("Vaccine")
-                        .HasColumnType("int");
+                    b.Property<string>("Vaccine")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientModelId");
 
-                    b.ToTable("Animals");
+                    b.ToTable("Animal");
                 });
 
             modelBuilder.Entity("WoofHub_App.Models.ClientModel", b =>
@@ -111,7 +147,46 @@ namespace WoofHub_App.Migrations
 
                     b.HasIndex("ClientAdressId");
 
-                    b.ToTable("ClientModel");
+                    b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("WoofHub_App.Models.UserModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("WoofHub_App.Models.AdoptionModel", b =>
+                {
+                    b.HasOne("WoofHub_App.Models.AnimalModel", "Animal")
+                        .WithMany()
+                        .HasForeignKey("AnimalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WoofHub_App.Models.ClientModel", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Animal");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("WoofHub_App.Models.AnimalModel", b =>

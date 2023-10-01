@@ -11,7 +11,7 @@ namespace WoofHub_App.Models
         public DateOnly? DateEvent { get; set; }
 
         [MaxLength(5000, ErrorMessage = "A descrição deve ter no máximo 5000 caractereres")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public required AdressModel EventAdress { get; set; }
     }

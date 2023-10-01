@@ -44,3 +44,5 @@ C:\Users\netin\WoofHub_App\bin\Debug\net7.0\MySqlConnector.dll
 C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\netin\WoofHub_App\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\netin\WoofHub_App\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\netin\WoofHub_App\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

@@ -8,7 +8,6 @@ var connectionString = builder.Configuration.GetConnectionString("WoofHubConnect
 builder.Services.AddDbContext<WoofHubContext>(options =>
 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Add services to the container.
 
 builder.Services.AddControllers();

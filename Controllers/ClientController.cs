@@ -1,57 +1,49 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WoofHub_App.Models;
+using Microsoft.AspNetCore.Mvc;
 using WoofHub_App.Data;
-using Microsoft.EntityFrameworkCore;
+using WoofHub_App.Models;
 
-namespace WoofHub_App.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class ClientController : ControllerBase
+namespace WoofHub_App.Controllers
 {
-	private WoofHubContext _context;
-	private readonly ILogger<ClientController> _logger;
-	public ClientController(ILogger<ClientController> logger)
-	{
-		_logger = logger;
-	}
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ClientController : ControllerBase
+    {
+        private WoofHubContext _context;
 
-	public ClientController(WoofHubContext context)
-	{
-		_context = context;
-	}
+        public ClientController(WoofHubContext context)
+        {
+            _context = context;
+        }
 
-	[HttpGet()]
-	[Route("get")]
-	public async Task<ActionResult<IEnumerable<ClientModel>>> Get()
-	{
-		if (_context.ClientModel is null)
-			return NotFound();
-		return await _context.ClientModel.ToListAsync();
-	}
+        [HttpPost]
+        public async Task<ActionResult<ClientModel>> Insert(ClientModel client)
+        {
+            if (!ClientModel.IsCpf(client.ClientCpf))
+                return BadRequest("CPF inválido");
 
-	[HttpGet()]
-	[Route("search/{ClientCpf}")]
-	public async Task<ActionResult<ClientModel>> Search([FromRoute] string ClientCpf)
-	{
-		if (_context.ClientModel is null)
-			return NotFound();
-		var client = await _context.ClientModel.FindAsync(ClientCpf);
-		if (client is null)
-			return NotFound();
-		return client;
-	}
+            _context.Client.Add(client);
+            await _context.SaveChangesAsync();
 
-	[HttpPost]
-	[Route("insert")]
-	public async Task<ActionResult<ClientModel>> Insert(ClientModel client)
-	{
-		if (!ClientModel.IsCpf(client.Cpf))
-			return BadRequest("CPF inv�lido!");
+            return Created("", client);
+        }
 
-		_context.ClientModel.Add(client);
-		await _context.SaveChangesAsync();
 
-		return Created("", client);
-	}
+        [HttpGet]
+        public IEnumerable<ClientModel> ShowAllClients()
+        {
+            return _context.Client;
+        }
+
+        [HttpGet]
+        [Route("{cpf}")]
+        public async Task<ActionResult<ClientModel>> SearchCpf([FromRoute] string cpf)
+        {
+            if (_context.Client is null)
+                return NotFound();
+            var client = await _context.Client.FindAsync(cpf);
+            if (client is null)
+                return NotFound();
+            return client;
+        }
+    }
 }

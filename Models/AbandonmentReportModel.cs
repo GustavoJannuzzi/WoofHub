@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WoofHub_App.Models.Enums;
 
 namespace WoofHub_App.Models
 {
-    public class AbandonmentReport
+    public class AbandonmentReportModel
     {
         [Key]
         public int Id { get; set; }

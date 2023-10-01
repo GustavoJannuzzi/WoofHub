@@ -1,29 +1,23 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WoofHub_App.Data;
-using WoofHub_App.Data.DTOs;
 using WoofHub_App.Models;
 
 namespace WoofHub_App.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AnimalController : ControllerBase
     {
         private WoofHubContext _context;
-        private IMapper _mapper;
-
         public AnimalController(WoofHubContext context)
         {
             _context = context;
         }
 
         [HttpPost]
-        public IActionResult AddAnimal(
-            [FromBody] AnimalDTO animalDto)
+        public IActionResult AddAnimal([FromBody] AnimalModel animal)
         {
-            AnimalModel animal = _mapper.Map<AnimalModel>(animalDto);
-            _context.Animals.Add(animal);
+            _context.Animal.Add(animal);
             _context.SaveChanges();
             return CreatedAtAction(nameof(SearchAnimalId),
                 new { id = animal.Id },
@@ -33,13 +27,13 @@ namespace WoofHub_App.Controllers
         [HttpGet]
         public IEnumerable<AnimalModel> ShowAllAnimals()
         {
-            return _context.Animals;
+            return _context.Animal;
         }
 
         [HttpGet("{id}")]
         public IActionResult SearchAnimalId(int id)
         {
-            var animal = _context.Animals.FirstOrDefault(animal => animal.Id == id);
+            var animal = _context.Animal.FirstOrDefault(animal => animal.Id == id);
             if (animal == null)
                 return NotFound();
 
@@ -49,7 +43,7 @@ namespace WoofHub_App.Controllers
         [HttpGet("Search")]
         public IActionResult SearchAnimalName([FromQuery] string AnimalName)
         {
-            var matchingAnimals = _context.Animals.Where(animal => animal.AnimalName == AnimalName).ToList();
+            var matchingAnimals = _context.Animal.Where(animal => animal.AnimalName == AnimalName).ToList();
             if (!matchingAnimals.Any())
                 return NotFound();
 

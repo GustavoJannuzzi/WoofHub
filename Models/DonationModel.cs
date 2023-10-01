@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WoofHub_App.Models.Enums;
 
 namespace WoofHub_App.Models
 {
@@ -10,7 +9,6 @@ namespace WoofHub_App.Models
         [Required]
         public float? Value { get; set; }
         [Required]
-        public CCDonationEnum CCDonation { get; set; }
         public string? Description { get; set; }
     }
 }

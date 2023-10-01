@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WoofHub_App.Data;
 
@@ -10,9 +11,11 @@ using WoofHub_App.Data;
 namespace WoofHub_App.Migrations
 {
     [DbContext(typeof(WoofHubContext))]
-    partial class WoofHubContextModelSnapshot : ModelSnapshot
+    [Migration("20230928031916_AlteradoNomeDaTabelaAdress")]
+    partial class AlteradoNomeDaTabelaAdress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

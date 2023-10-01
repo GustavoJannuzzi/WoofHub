@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using WoofHub_App.Models.Enums;
 
 namespace WoofHub_App.Models
 {
@@ -14,6 +13,9 @@ namespace WoofHub_App.Models
         public string? AnimalName { get; set; }
 
         [Required]
+        public string? Animal { get; set; }
+
+        [Required]
         [MaxLength(100)]
         public string? Age { get; set; }
         
@@ -21,19 +23,16 @@ namespace WoofHub_App.Models
         public string? Description { get; set; }
 
         [Required]
-        public AnimalEnum Animal { get; set; }
+        public string? Situation { get; set; }
 
         [Required]
-        public SituationEnum Situation { get; set; }
+        public string? Size { get; set; }
 
         [Required]
-        public SizeEnum Size { get; set; }
+        public string? Vaccine { get; set; }
 
         [Required]
-        public VaccineEnum Vaccine { get; set; }
-
-        [Required]
-        public required TreatmentEnum Treatment { get; set; }
+        public string? Treatment { get; set; }
         public ClientModel? ClientModel { get; set; }
     }
 }
