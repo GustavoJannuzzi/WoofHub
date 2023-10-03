@@ -13,6 +13,11 @@ namespace WoofHub_App.Models
         [MaxLength(5000, ErrorMessage = "A descrição deve ter no máximo 5000 caractereres")]
         public string? Description { get; set; }
 
-        public required AdressModel EventAdress { get; set; }
+        [Required]
+        [MaxLength(155)]
+        public string? City { get; set; }
+        [Required]
+        [MaxLength(155)]
+        public string? Street { get; set; }
     }
 }

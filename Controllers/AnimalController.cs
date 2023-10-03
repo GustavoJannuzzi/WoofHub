@@ -1,5 +1,10 @@
+using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WoofHub_App.Data;
+using WoofHub_App.Data.Dtos;
+using WoofHub_App.Data.Dtos.AnimalDtos;
 using WoofHub_App.Models;
 
 namespace WoofHub_App.Controllers
@@ -9,25 +14,29 @@ namespace WoofHub_App.Controllers
     public class AnimalController : ControllerBase
     {
         private WoofHubContext _context;
-        public AnimalController(WoofHubContext context)
+        private IMapper _mapper;
+
+        public AnimalController(WoofHubContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public IActionResult AddAnimal([FromBody] AnimalModel animal)
+        public async Task<ActionResult<AnimalModel>> AddAnimal([FromBody] CreateAnimalDto animalDto)
         {
-            _context.Animal.Add(animal);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(SearchAnimalId),
-                new { id = animal.Id },
-                animal);
+            AnimalModel animal = _mapper.Map<AnimalModel>(animalDto);
+
+            await _context.Animal.AddAsync(animal);
+            await _context.SaveChangesAsync();
+            return Created("", animal);
         }
 
         [HttpGet]
-        public IEnumerable<AnimalModel> ShowAllAnimals()
+        public async Task<IEnumerable<ReadAnimalDto>> ShowAllAnimals()
         {
-            return _context.Animal;
+            var animals = await _context.Animal.ToListAsync();
+            return _mapper.Map<List<ReadAnimalDto>>(animals);
         }
 
         [HttpGet("{id}")]
@@ -36,8 +45,8 @@ namespace WoofHub_App.Controllers
             var animal = _context.Animal.FirstOrDefault(animal => animal.Id == id);
             if (animal == null)
                 return NotFound();
-
-            return Ok(animal);
+            var animalDto = _mapper.Map<ReadAnimalDto>(animal);
+            return Ok(animalDto);
         }
 
         [HttpGet("Search")]
@@ -48,6 +57,50 @@ namespace WoofHub_App.Controllers
                 return NotFound();
 
             return Ok(matchingAnimals);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateAnimal(int id, [FromBody] UpdateAnimalDto animalDto)
+        {
+            var animal = _context.Animal.FirstOrDefault(
+                animal => animal.Id == id);
+            if (animal == null)
+                return NotFound();
+            _mapper.Map(animalDto, animal);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult UpdateAnimalPatch(int id, JsonPatchDocument<UpdateAnimalDto> patch)
+        {
+            var animal = _context.Animal.FirstOrDefault(
+                animal => animal.Id == id);
+            if (animal == null)
+                return NotFound();
+
+            var animalUpdate = _mapper.Map<UpdateAnimalDto>(animal);
+
+            patch.ApplyTo(animalUpdate, ModelState);
+
+            if (!TryValidateModel(animalUpdate))
+                return ValidationProblem(ModelState);
+
+            _mapper.Map(animalUpdate, animal);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAnimal(int id)
+        {
+            var animal = _context.Animal.FirstOrDefault(
+                animal => animal.Id == id);
+            if (animal == null)
+                return NotFound();
+            _context.Remove(animal);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }

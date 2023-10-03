@@ -17,7 +17,44 @@ namespace WoofHub_App.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("WoofHub_App.Models.AbandonmentReportModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Animal")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
+
+                    b.Property<DateOnly?>("Date")
+                        .IsRequired()
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(5000)
+                        .HasColumnType("varchar(5000)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AbandonmentReport");
+                });
 
             modelBuilder.Entity("WoofHub_App.Models.AdoptionModel", b =>
                 {
@@ -31,11 +68,8 @@ namespace WoofHub_App.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("Date")
+                    b.Property<DateOnly>("DateAdoption")
                         .HasColumnType("date");
-
-                    b.Property<string>("Situation")
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -52,25 +86,40 @@ namespace WoofHub_App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("AbandonmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Cep")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
 
                     b.Property<string>("City")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
 
                     b.Property<string>("Country")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
 
-                    b.Property<string>("Number")
-                        .HasColumnType("longtext");
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<string>("State")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
 
                     b.Property<string>("Street")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AbandonmentId");
 
                     b.ToTable("Adress");
                 });
@@ -88,15 +137,13 @@ namespace WoofHub_App.Migrations
 
                     b.Property<string>("Animal")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("AnimalName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
-
-                    b.Property<int?>("ClientModelId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasMaxLength(5000)
@@ -104,23 +151,25 @@ namespace WoofHub_App.Migrations
 
                     b.Property<string>("Situation")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Size")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Treatment")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Vaccine")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientModelId");
 
                     b.ToTable("Animal");
                 });
@@ -131,20 +180,86 @@ namespace WoofHub_App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("ClientAdressId")
+                    b.Property<int>("AdressId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AnimalModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("ClientCpf")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ClientName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientAdressId");
+                    b.HasIndex("AdressId")
+                        .IsUnique();
+
+                    b.HasIndex("AnimalModelId");
 
                     b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("WoofHub_App.Models.DonationModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("varchar(5000)");
+
+                    b.Property<string>("DonorsName")
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
+
+                    b.Property<float?>("Value")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Donation");
+                });
+
+            modelBuilder.Entity("WoofHub_App.Models.EventModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
+
+                    b.Property<DateOnly?>("DateEvent")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(5000)
+                        .HasColumnType("varchar(5000)");
+
+                    b.Property<string>("NameEvent")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("varchar(155)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Event");
                 });
 
             modelBuilder.Entity("WoofHub_App.Models.UserModel", b =>
@@ -170,13 +285,13 @@ namespace WoofHub_App.Migrations
             modelBuilder.Entity("WoofHub_App.Models.AdoptionModel", b =>
                 {
                     b.HasOne("WoofHub_App.Models.AnimalModel", "Animal")
-                        .WithMany()
+                        .WithMany("Adoptions")
                         .HasForeignKey("AnimalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WoofHub_App.Models.ClientModel", "Client")
-                        .WithMany()
+                        .WithMany("Adoptions")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -186,24 +301,45 @@ namespace WoofHub_App.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("WoofHub_App.Models.AnimalModel", b =>
+            modelBuilder.Entity("WoofHub_App.Models.AdressModel", b =>
                 {
-                    b.HasOne("WoofHub_App.Models.ClientModel", "ClientModel")
+                    b.HasOne("WoofHub_App.Models.AbandonmentReportModel", "Abandonment")
                         .WithMany()
-                        .HasForeignKey("ClientModelId");
+                        .HasForeignKey("AbandonmentId");
 
-                    b.Navigation("ClientModel");
+                    b.Navigation("Abandonment");
                 });
 
             modelBuilder.Entity("WoofHub_App.Models.ClientModel", b =>
                 {
-                    b.HasOne("WoofHub_App.Models.AdressModel", "ClientAdress")
-                        .WithMany()
-                        .HasForeignKey("ClientAdressId")
+                    b.HasOne("WoofHub_App.Models.AdressModel", "Adress")
+                        .WithOne("Client")
+                        .HasForeignKey("WoofHub_App.Models.ClientModel", "AdressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ClientAdress");
+                    b.HasOne("WoofHub_App.Models.AnimalModel", null)
+                        .WithMany("Clients")
+                        .HasForeignKey("AnimalModelId");
+
+                    b.Navigation("Adress");
+                });
+
+            modelBuilder.Entity("WoofHub_App.Models.AdressModel", b =>
+                {
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("WoofHub_App.Models.AnimalModel", b =>
+                {
+                    b.Navigation("Adoptions");
+
+                    b.Navigation("Clients");
+                });
+
+            modelBuilder.Entity("WoofHub_App.Models.ClientModel", b =>
+                {
+                    b.Navigation("Adoptions");
                 });
 #pragma warning restore 612, 618
         }

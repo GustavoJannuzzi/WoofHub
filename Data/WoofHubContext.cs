@@ -8,7 +8,7 @@ namespace WoofHub_App.Data
         public WoofHubContext(DbContextOptions<WoofHubContext> options)
             : base(options)
         {
-            
+
         }
 
         public DbSet<AnimalModel> Animal { get; set; }
@@ -16,6 +16,8 @@ namespace WoofHub_App.Data
         public DbSet<AdressModel> Adress { get; set; }
         public DbSet<UserModel> User { get; set; }
         public DbSet<AdoptionModel> Adoption { get; set; }
-
+        public DbSet<AbandonmentReportModel> AbandonmentReport { get; set; }
+        public DbSet<DonationModel> Donation { get; set; }
+        public DbSet<EventModel> Event { get; set; }
     }
 }

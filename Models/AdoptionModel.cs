@@ -5,10 +5,18 @@ namespace WoofHub_App.Models
     public class AdoptionModel
     {
         [Key]
+        [Required]
         public int Id { get; set; }
-        public required ClientModel Client { get; set; }
-        public required AnimalModel Animal { get; set; }
-        public string? Situation { get; set; }
-        public DateOnly Date { get; set; }
+
+        [Required]
+        public DateOnly DateAdoption { get; set; }
+
+        [Required]
+        public int ClientId { get; set; }
+        public virtual ClientModel? Client { get; set; }
+
+        [Required]
+        public int AnimalId { get; set; }
+        public virtual AnimalModel? Animal { get; set; }
     }
 }

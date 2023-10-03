@@ -13,6 +13,7 @@ namespace WoofHub_App.Models
         public string? AnimalName { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string? Animal { get; set; }
 
         [Required]
@@ -23,16 +24,21 @@ namespace WoofHub_App.Models
         public string? Description { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string? Situation { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string? Size { get; set; }
-
+        
         [Required]
+        [MaxLength(100)]
         public string? Vaccine { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string? Treatment { get; set; }
-        public ClientModel? ClientModel { get; set; }
+        public virtual ICollection<AdoptionModel>? Adoptions { get; set; }
+        public virtual ICollection<ClientModel>? Clients { get; set; }
     }
 }

@@ -5,10 +5,18 @@ namespace WoofHub_App.Models
     public class ClientModel
     {
         [Key]
+        [Required]
         public int Id { get; set; }
+        [Required]
         public string? ClientName { get; set; }
+        [Required]
         public string? ClientCpf { get; set; }
-        public required AdressModel ClientAdress { get; set; }
+        [Required]
+        public int AdressId { get; set; }
+        public virtual AdressModel? Adress { get; set; }
+        public virtual ICollection<AdoptionModel>? Adoptions { get; set; }
+
+
         public static bool IsCpf(string cpf)
         {
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
