@@ -14,8 +14,7 @@ namespace WoofHub_App.Models
         [Required]
         public int AdressId { get; set; }
         public virtual AdressModel? Adress { get; set; }
-        public virtual ICollection<AdoptionModel>? Adoptions { get; set; }
-
+        public virtual ICollection<AdoptionModel>? Adoptions { get; set; } = new List<AdoptionModel>();
 
         public static bool IsCpf(string cpf)
         {

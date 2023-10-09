@@ -9,7 +9,6 @@ namespace WoofHub_App.Data.Dtos.ClientDtos
         public int Id { get; set; }
         public string? ClientName { get; set; }
         public string? ClientCpf { get; set; }
-        
         [JsonIgnore]
         public ReadAdressDto? Adress { get; set; }
         public ICollection<ReadAdoptionDto>? Adoption { get; set; }

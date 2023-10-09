@@ -11,8 +11,8 @@ using WoofHub_App.Data;
 namespace WoofHub_App.Migrations
 {
     [DbContext(typeof(WoofHubContext))]
-    [Migration("20231003132326_RemocaoDeCampoNaClasseAdress")]
-    partial class RemocaoDeCampoNaClasseAdress
+    [Migration("20231009020208_MudandoDoDateTime")]
+    partial class MudandoDoDateTime
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,8 +71,8 @@ namespace WoofHub_App.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("DateAdoption")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateAdoption")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -87,9 +87,6 @@ namespace WoofHub_App.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AbandonmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Cep")
@@ -121,8 +118,6 @@ namespace WoofHub_App.Migrations
                         .HasColumnType("varchar(155)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AbandonmentId");
 
                     b.ToTable("Adress");
                 });
@@ -186,6 +181,9 @@ namespace WoofHub_App.Migrations
                     b.Property<int>("AdressId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AnimalModelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ClientCpf")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -198,6 +196,8 @@ namespace WoofHub_App.Migrations
 
                     b.HasIndex("AdressId")
                         .IsUnique();
+
+                    b.HasIndex("AnimalModelId");
 
                     b.ToTable("Client");
                 });
@@ -299,15 +299,6 @@ namespace WoofHub_App.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("WoofHub_App.Models.AdressModel", b =>
-                {
-                    b.HasOne("WoofHub_App.Models.AbandonmentReportModel", "Abandonment")
-                        .WithMany()
-                        .HasForeignKey("AbandonmentId");
-
-                    b.Navigation("Abandonment");
-                });
-
             modelBuilder.Entity("WoofHub_App.Models.ClientModel", b =>
                 {
                     b.HasOne("WoofHub_App.Models.AdressModel", "Adress")
@@ -315,6 +306,10 @@ namespace WoofHub_App.Migrations
                         .HasForeignKey("WoofHub_App.Models.ClientModel", "AdressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("WoofHub_App.Models.AnimalModel", null)
+                        .WithMany("Clients")
+                        .HasForeignKey("AnimalModelId");
 
                     b.Navigation("Adress");
                 });
@@ -327,6 +322,8 @@ namespace WoofHub_App.Migrations
             modelBuilder.Entity("WoofHub_App.Models.AnimalModel", b =>
                 {
                     b.Navigation("Adoptions");
+
+                    b.Navigation("Clients");
                 });
 
             modelBuilder.Entity("WoofHub_App.Models.ClientModel", b =>

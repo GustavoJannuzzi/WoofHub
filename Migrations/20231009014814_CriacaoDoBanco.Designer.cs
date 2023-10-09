@@ -11,8 +11,8 @@ using WoofHub_App.Data;
 namespace WoofHub_App.Migrations
 {
     [DbContext(typeof(WoofHubContext))]
-    [Migration("20231003135932_AtualizacaoTabelas")]
-    partial class AtualizacaoTabelas
+    [Migration("20231009014814_CriacaoDoBanco")]
+    partial class CriacaoDoBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,9 +89,6 @@ namespace WoofHub_App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("AbandonmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Cep")
                         .IsRequired()
                         .HasMaxLength(155)
@@ -121,8 +118,6 @@ namespace WoofHub_App.Migrations
                         .HasColumnType("varchar(155)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AbandonmentId");
 
                     b.ToTable("Adress");
                 });
@@ -302,15 +297,6 @@ namespace WoofHub_App.Migrations
                     b.Navigation("Animal");
 
                     b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("WoofHub_App.Models.AdressModel", b =>
-                {
-                    b.HasOne("WoofHub_App.Models.AbandonmentReportModel", "Abandonment")
-                        .WithMany()
-                        .HasForeignKey("AbandonmentId");
-
-                    b.Navigation("Abandonment");
                 });
 
             modelBuilder.Entity("WoofHub_App.Models.ClientModel", b =>

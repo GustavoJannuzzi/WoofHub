@@ -16,7 +16,7 @@ namespace WoofHub_App.Profiles
                 .ForMember(clientDto => clientDto.Adress,
                     opt => opt.MapFrom(client => client.Adress))
                 .ForMember(clientDto => clientDto.Adoption,
-                    opt => opt.MapFrom(client => client.Adoptions)); ;
+                    opt => opt.MapFrom(client => client.Adoptions));
         }
     }
 }

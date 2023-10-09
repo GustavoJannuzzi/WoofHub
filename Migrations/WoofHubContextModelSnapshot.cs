@@ -68,8 +68,8 @@ namespace WoofHub_App.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("DateAdoption")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateAdoption")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -84,9 +84,6 @@ namespace WoofHub_App.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AbandonmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Cep")
@@ -118,8 +115,6 @@ namespace WoofHub_App.Migrations
                         .HasColumnType("varchar(155)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AbandonmentId");
 
                     b.ToTable("Adress");
                 });
@@ -299,15 +294,6 @@ namespace WoofHub_App.Migrations
                     b.Navigation("Animal");
 
                     b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("WoofHub_App.Models.AdressModel", b =>
-                {
-                    b.HasOne("WoofHub_App.Models.AbandonmentReportModel", "Abandonment")
-                        .WithMany()
-                        .HasForeignKey("AbandonmentId");
-
-                    b.Navigation("Abandonment");
                 });
 
             modelBuilder.Entity("WoofHub_App.Models.ClientModel", b =>

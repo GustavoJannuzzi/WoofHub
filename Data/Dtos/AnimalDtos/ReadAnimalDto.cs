@@ -1,4 +1,5 @@
 using WoofHub_App.Data.Dtos.AdoptionDto;
+using WoofHub_App.Models;
 
 namespace WoofHub_App.Data.Dtos.AnimalDtos
 {

@@ -31,6 +31,5 @@ namespace WoofHub_App.Models
         [Required]
         public int Number { get; set; }
         public virtual ClientModel? Client { get; set; }
-        public virtual AbandonmentReportModel? Abandonment { get; set; }
     }
 }

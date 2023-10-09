@@ -9,7 +9,7 @@ namespace WoofHub_App.Models
         public int Id { get; set; }
 
         [Required]
-        public DateOnly DateAdoption { get; set; }
+        public DateTime DateAdoption { get; set; }
 
         [Required]
         public int ClientId { get; set; }

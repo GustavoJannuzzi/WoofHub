@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using WoofHub_App.Data;
 using WoofHub_App.Data.Dtos;
 using WoofHub_App.Data.Dtos.ClientDtos;
@@ -37,12 +38,12 @@ namespace WoofHub_App.Controllers
         }
 
         [HttpGet]
-         public async Task<IEnumerable<ReadClientDto>> ShowAllClients()
+        public async Task<IEnumerable<ReadClientDto>> ShowAllClients()
         {
             var clients = await _context.Client.ToListAsync();
             return _mapper.Map<List<ReadClientDto>>(clients);
         }
-        
+
         [HttpGet("{id}")]
         public IActionResult SearchClientId(int id)
         {
@@ -88,7 +89,7 @@ namespace WoofHub_App.Controllers
 
             if (!TryValidateModel(clientUpdate))
                 return ValidationProblem(ModelState);
-              
+
             _mapper.Map(clientUpdate, client);
             await _context.SaveChangesAsync();
             return NoContent();
